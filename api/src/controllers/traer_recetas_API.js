@@ -1,6 +1,7 @@
 require('dotenv').config();
 const axios = require("axios");
 const {Receta, TipoDeDieta } = require("../db")
+const recipes = require("./parsejson.js");
 const {
 API_KEY
   } = process.env;
@@ -10,11 +11,15 @@ API_KEY
 
 
 async function traer_recetas_api() {
+       
 
     try {
-        let recetas = (await axios.get(`https://api.spoonacular.com/recipes/complexSearch?number=100&addRecipeInformation=true&apiKey=${API_KEY}`));
+        async function recetasdesdejson () {
+            return recipes
+        }
+        let recetas = await recetasdesdejson()
 
-        recetas = recetas.data.results
+        
         
 
         
