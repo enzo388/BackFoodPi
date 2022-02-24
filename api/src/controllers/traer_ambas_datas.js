@@ -4,7 +4,7 @@ const {traer_recetas_BD} = require('./traer_recetas_DB');
 
 
 async function traer_ambas(){
-    try {
+   try {
         let recetas_api = await traer_recetas_api()
         let recetas_BD = await traer_recetas_BD()
 
@@ -33,7 +33,10 @@ async function traer_ambas(){
     } catch (error) {
         
     }
-}
+} 
+
+
+
 
 module.exports = {
     traer_ambas,

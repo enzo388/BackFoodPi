@@ -14,7 +14,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     resumen:{
-      type: DataTypes.STRING
+      type: DataTypes.TEXT,
     },
     puntuacion:{
       type: DataTypes.INTEGER

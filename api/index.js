@@ -18,13 +18,37 @@
 //                       `=---='
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
-const { Dieta } = require('./src/db.js');
+const { Dieta, Receta } = require('./src/db.js');
 const { conn } = require('./src/db.js');
+const { traer_ambas } = require("./src/controllers/traer_ambas_datas");
+const { default: axios } = require('axios');
 
+
+async function cargarRecetas () {
+  const x = await traer_ambas()
+  for (let e of x) {
+    const { nombre, resumen, puntuacion, nivel_de_comida_saludable, paso_a_paso, imagen } = e;
+
+   
+  let recetaCreada = await Receta.create ({
+    // id,
+    nombre: nombre,
+    resumen: resumen,
+    puntuacion: puntuacion,
+    nivel_de_comida_saludable: nivel_de_comida_saludable,
+    paso_a_paso: paso_a_paso,
+    imagen: imagen
+    // createdInDb: createdInDb
+})
+}
+}
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
   server.listen(3001, async() => {
     try {
+      const x = await traer_ambas()
+      await cargarRecetas()
+      
       const dietas = ["gluten free","ketogenic","vegetarian"," lacto ovo vegetarian","dairy free","vegan","pescetarian","paleolithic","primal","Whole30", "Lacto-Vegetarian", "Low FODMAP"]
       dietas.forEach(element => {
         Dieta.create({name:element})
